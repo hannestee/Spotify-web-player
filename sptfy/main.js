@@ -20,8 +20,12 @@ $(document).ready(function () {
 			headers: {
 			'Authorization' : 'Bearer ' + accessToken
 			},
-			success: onGetTracks
-			});
+			success: onGetTracks,
+			error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				document.getElementsByTagName("h4")[0].innerHTML = 'Not logged in';
+				document.getElementById("modalmsg").innerHTML = 'You must log in first';
+				$('#myModal').modal('show');
+			}});
 	}
 			
 	function onGetTracks(data) {
@@ -43,9 +47,11 @@ $(document).ready(function () {
 				tracksAvailable[i].preview_url + "\",\"" +
 				tracksAvailable[i].album.name + "\",\"" +
 				tracksAvailable[i].artists[0].name + "\",\"" +
-				tracksAvailable[i].album.images[0].url +"\");' ><a href="+
-				tracksAvailable[i].preview_url+">"+
-				tracksAvailable[i].album.name+"</a></ul>");
+				tracksAvailable[i].album.images[0].url +"\");' ><p>"+
+				tracksAvailable[i].name+ " - "+
+				tracksAvailable[i].artists[0].name+"</p></ul>"
+				
+				);
 			}
 		}
 		//console.log(trackList);

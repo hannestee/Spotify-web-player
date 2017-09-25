@@ -64,13 +64,31 @@
 
     <!-- Portfolio Item Heading -->
 	<div class="search">
-    <h1 class="my-4">Search
-		</h1>
-		<div class="searchMusic">
-				<input id="musicSearch" type="search" placeholder="Type a track">
-				<button id="searchButton">Search</button>
+		<input id="musicSearch" type="search" class="form-control" placeholder="Search for tracks">
+		<button id="searchButton">Search</button>
+	</div>
+	
+	<div id="clear"></div>
+	
+	<!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"></h4>
+				</div>
+				<div class="modal-body">
+					<p id="modalmsg"></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
 		</div>
 	</div>
+	
     <!-- Portfolio Item Row -->
     <div class="row">
 
@@ -136,8 +154,7 @@
         <li>Item</li>
         <li>Item</li>
       </ul>
-
-
+	  
     </div>
     <!-- /.row -->
 
