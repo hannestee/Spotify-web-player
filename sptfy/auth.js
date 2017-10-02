@@ -3,6 +3,23 @@ var accessToken;
 $(document).ready(function () {
 		console.log("auth.js ready")
         var stateKey = 'spotify_auth_state';
+		
+		
+		function logOut(){
+			localStorage.removeItem(stateKey);
+			localStorage.removeItem("accessToken");
+			localStorage.removeItem("UserName");
+			location.reload();
+		}
+		
+		if (localStorage.getItem("accessToken")){
+			document.getElementById('userLoggedIn').innerHTML = (localStorage.getItem("UserName") + " <a id='logoutbtn' href='#'>Logout</a>");
+			document.getElementById("logoutbtn").addEventListener ("click", logOut, false);
+			document.getElementById('userLoggedIn').setAttribute("style", "display:inline-block;");
+			document.getElementById('login-button').style.display = "none";
+			console.log("user logged in");
+		}
+		
         /**
          * Obtains parameters from the hash of the URL
          * @return Object
@@ -55,7 +72,9 @@ $(document).ready(function () {
                   $('#loggedin').show();
 				  //console.log(access_token);
 				  accessToken = access_token;
-				  localStorage.setItem("accessToken",accessToken);
+				  localStorage.setItem("accessToken", accessToken);
+				  console.log(response.id);
+				  localStorage.setItem("UserName", response.id);
                 }
             });
           } else {

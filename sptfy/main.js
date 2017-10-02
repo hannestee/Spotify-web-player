@@ -11,6 +11,7 @@ $(document).ready(function () {
 	
 	function getTracks(name){
 	//console.log(name);
+	var accessToken = localStorage.getItem("accessToken")
 	$.ajax({
 			url: 'https://api.spotify.com/v1/search',
 			data: {
@@ -42,19 +43,24 @@ $(document).ready(function () {
 			if (tracksAvailable[i].preview_url) {
 				counter = counter + 1;
 				trackList.push(tracksAvailable[i].preview_url);
-				$( "#demo" ).append("<ul><img alt='Album picture' height='100' width='100' src="+
-				tracksAvailable[i].album.images[0].url+" onclick='setPlayer(\"" +
+				$( "#demo" ).append("<ul id='playlistObject' style='max-width:90%;height:3.3em;' onclick='setPlayer(\"" +
 				tracksAvailable[i].preview_url + "\",\"" +
 				tracksAvailable[i].album.name + "\",\"" +
 				tracksAvailable[i].artists[0].name + "\",\"" +
-				tracksAvailable[i].album.images[0].url +"\");' ><p>"+
-				tracksAvailable[i].name+ " - "+
-				tracksAvailable[i].artists[0].name+"</p></ul>"
-				
-				);
+				tracksAvailable[i].album.images[0].url +"\");'><div> <img style='display:inline-block;margin-left:-2.45em;margin-right:1em;margin-bottom:1.5em;'alt='Album picture' height='50' width='50' src="+
+				tracksAvailable[i].album.images[0].url+"><div style='display:inline-block;'><p id='songName' style='margin-bottom:0'>"+
+				tracksAvailable[i].name+ " "+"</p>"+"<p id='artistName' style='margin-bottom:0;color:darkcyan'>"+
+				tracksAvailable[i].artists[0].name+
+				"</p>"+"</div>"+
+				"</div> </ul>"
+				);	
 			}
 		}
 		//console.log(trackList);
 	}
 	
 });
+
+//+"<span><i class='fa fa-play' aria-hidden='true' style='margin-left:2em;'></i></span>"
+
+//style='border: 1px solid cyan;border-radius:5px;

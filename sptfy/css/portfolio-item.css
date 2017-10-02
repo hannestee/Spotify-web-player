@@ -30,7 +30,7 @@ body {
 }
 
 audio {
-    background-color: red;
+    background-color: darkcyan;
 }
 
 .logo-img {
@@ -40,6 +40,10 @@ audio {
 .song-details {
     margin-top: 1em;
     width: 100%;
+}
+
+#playlistObject:hover{
+	 background-color: DarkSlateGray ;	
 }
 
 
@@ -83,6 +87,6 @@ audio {
 	#musicSearch{
 	display:inline-block;
 	width: 75%;
-}
+	}
 }
 
