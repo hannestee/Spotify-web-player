@@ -1,0 +1,118 @@
+/*!
+ * Start Bootstrap - Portfolio Item (http://startbootstrap.com/template-overviews/portfolio-item)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-portfolio-item/blob/master/LICENSE)
+ */
+
+body {
+    padding-top: 54px;
+    background-color: #000000;
+    color: #00e6b8;
+}
+
+.navbar {
+    background-color: black;
+    opacity: 0.90;
+    height: 80px;
+}
+
+.search{
+    margin-top: 2em;
+    position: relative;
+}
+
+
+#musicSearch{
+	display:inline-block;
+    width: 100%;
+}
+
+#searchButton {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border: none;
+    background-color: white;
+}
+
+button:focus {
+    outline: none;
+}
+
+#clear{
+	clear: both;
+}
+
+audio {
+    background-color: red;
+}
+
+.logo-img {
+    width: 60px;
+}
+
+#mainContent {
+    margin-top: 1em;
+}
+
+.song-details {
+    margin-top: 1em;
+    width: 100%;
+}
+
+.modal-content {
+    background-color: black;
+}
+
+#myModal {
+    background-color: black;
+    opacity: 0.9;
+}
+
+.close {
+    color: #00b38f;
+}
+
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
+
+    .song-info {
+        margin-top: 100px;
+    }
+		.search{
+		margin-top:2em;
+	}
+}
+
+@media (max-width: 992px) {
+    .song-info {
+        margin-top: 20px;
+    }
+    /*.song-details{
+        float: right;
+        text-align: left;
+        width: 60%;
+    }*/
+	.search{
+		margin-top:2em;
+	}
+}
+
+@media (max-width: 640px) {
+
+    .song-details{
+        float: right;
+    }
+	
+	.search{
+		margin-top:2em;
+	}
+	
+	#musicSearch{
+	display:inline-block;
+	width: 100%;
+}
+}
+
