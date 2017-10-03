@@ -14,12 +14,13 @@
 
   <!-- Custom styles for this template -->
   <link href="css/portfolio-item.css" rel="stylesheet">
-
+  
   <script src="https://use.fontawesome.com/47bd6d474e.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
   <script src="auth.js"></script>
   <script src="main.js"></script>
+  
 </head>
 
 <body>
@@ -30,7 +31,7 @@
 	  <div id="login">
       <button class="navbar-toggler" id="login-button" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
 		  aria-expanded="false" aria-label="Toggle navigation">
-          <span><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i></span>
+          <span><i class="fa fa-sign-in" aria-hidden="true"></i></span>
       </button>
 	  </div>
 	  <div style="display:none;"id="userLoggedIn">
@@ -66,30 +67,41 @@
 
     <!-- Portfolio Item Heading -->
 	<div class="search">
-		<input id="musicSearch" type="search" class="form-control" placeholder="Search for songs">
-		<button id="searchButton">Search</button>
-	</div>
-	
-	<div id="clear"></div>
-	
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title"></h4>
-				</div>
-				<div class="modal-body">
-					<p id="modalmsg"></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
+      <input id="musicSearch" type="text" class="form-control" placeholder="Search for tracks">
+      <button id="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
+
+    <script>
+      document.getElementById("musicSearch")
+        .addEventListener("keyup", function (event) {
+          event.preventDefault();
+          if (event.keyCode == 13) {
+            document.getElementById("searchButton").click();
+          }
+        });
+    </script>
+
+    <div id="clear"></div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+            <p id="modalmsg"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 	
     <!-- Portfolio Item Row -->
     <div class="row">
@@ -113,7 +125,8 @@
     <!-- Related Projects Row -->
     <h3 class="my-4" id="searchResults" style="display:none">Search results:</h3>
 	
-	<p id="demo"></p>
+	<div class="demo" id="demo"></div>
+	
 		<script id="user-profile-template" type="text/x-handlebars-template">
 		<p>Logged in as</p><dd id="userName">{{id}}</dd>
 	  </script>
@@ -151,7 +164,7 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/popper/popper.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	
+
   <script>
 	function setPlayer(url, name, artist, image){
 		console.log(image);

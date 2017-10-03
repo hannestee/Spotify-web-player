@@ -18,11 +18,24 @@ body {
 
 .search{
 	margin-top: 2em;
+	position: relative;
 }
 
 #musicSearch{
 	display:inline-block;
-	width: 90%;
+	width: 100%;
+}
+
+#searchButton {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    border: none;
+    background-color: white;
+}
+
+button:focus {
+    outline: none;
 }
 
 #clear{
@@ -37,13 +50,30 @@ audio {
     width: 60px;
 }
 
+#mainContent {
+    margin-top: 1em;
+}
+
 .song-details {
     margin-top: 1em;
     width: 100%;
 }
 
+.modal-content {
+    background-color: black;
+}
+ 
+#myModal {
+    background-color: black;
+    opacity: 0.9;
+}
+ 
+.close {
+    color: #00b38f;
+}
+
 #playlistObject:hover{
-	 background-color: DarkSlateGray ;	
+	background-color: DarkSlateGray;	
 }
 
 
@@ -86,7 +116,7 @@ audio {
 	
 	#musicSearch{
 	display:inline-block;
-	width: 75%;
+	width: 100%;
 	}
 }
 
