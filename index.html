@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Sptfy5.0</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/portfolio-item.css" rel="stylesheet">
+
+  <script src="https://use.fontawesome.com/47bd6d474e.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+  <script src="auth.js"></script>
+  <script src="main.js"></script>
+  <!--<script src="audio.js"></script>-->
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img class="logo-img" src="logo.png"></a>
+      <div id="login">
+        <button class="navbar-toggler" id="login-button" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span><i class="fa fa-sign-in" aria-hidden="true"></i></span>
+      </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <!-- Login From-->
+        <div class="container">
+        </div>
+
+        <!--<ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Login
+                <span class="sr-only">(current)</span>
+              </a>-->
+
+        <!-- </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+        </ul>-->
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <!-- Portfolio Item Heading -->
+    <div class="search">
+      <input id="musicSearch" type="text" class="form-control" placeholder="Search for tracks">
+      <button id="searchButton"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
+
+    <script>
+      document.getElementById("musicSearch")
+        .addEventListener("keyup", function (event) {
+          event.preventDefault();
+          if (event.keyCode == 13) {
+            document.getElementById("searchButton").click();
+          }
+        });
+    </script>
+
+    <div id="clear"></div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+            <p id="modalmsg"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Portfolio Item Row -->
+    <div class="row" id="mainContent">
+
+      <div class="col-md-8">
+        <script>
+          var audioContext = new AudioContext();
+
+          // If you're using Safari, you'll need to use this line instead
+          var audioContext = new webkitAudioContext();
+
+          var context = new AudioContext(),
+            oscillator = context.createOscillator();
+
+          // Connect the oscillator to our speakers
+          oscillator.connect(context.destination);
+
+          // Start the oscillator now
+          oscillator.start(context.currentTime);
+
+          // Stop the oscillator 3 seconds from now
+          oscillator.stop(context.currentTime + 3);
+        </script>
+        <!--<img class="img-fluid" src="http://placehold.it/750x500" alt="">-->
+      </div>
+
+      <div class="col-md-4 song-info">
+        <img class="img-responsive mx-auto my-auto" id="album-cover" src="http://placehold.it/200x200"></img>
+        <p class="song-details" id="song-details">
+          <marquee behavior="scroll" direction="left">Random Artist-Random Song</marquee>
+        </p>
+        <audio controls id="audio">
+          <source src="https://p.scdn.co/mp3-preview/7d96f9e8087aee5a9822af8be5a8539b9b7b186a?cid=f6c1ec9bcbf7426fa257999930ec8ee8"
+            type="audio/mpeg"> Your browser does not support the audio element.
+        </audio>
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Related Projects Row -->
+    <h3 class="my-4">Playlist</h3>
+
+    <p id="demo"></p>
+    <div id="loggedin">
+      <div id="user-profile">
+      </div>
+      <div id="oauth">
+      </div>
+    </div>
+    <div class="row">
+
+      <script id="user-profile-template" type="text/x-handlebars-template">
+        <h1>Logged in as {{display_name}}</h1>
+        <div class="media">
+          <div class="pull-left">
+            <img class="media-object" width="150" src="{{images.0.url}}" />
+          </div>
+          <div class="media-body">
+            <dl class="dl-horizontal">
+              <dt>Display name</dt>
+              <dd class="clearfix">{{display_name}}</dd>
+              <dt>Id</dt>
+              <dd>{{id}}</dd>
+              <dt>Email</dt>
+              <dd>{{email}}</dd>
+              <dt>Spotify URI</dt>
+              <dd><a href="{{external_urls.spotify}}">{{external_urls.spotify}}</a></dd>
+              <dt>Link</dt>
+              <dd><a href="{{href}}">{{href}}</a></dd>
+              <dt>Profile Image</dt>
+              <dd class="clearfix"><a href="{{images.0.url}}">{{images.0.url}}</a></dd>
+              <dt>Country</dt>
+              <dd>{{country}}</dd>
+            </dl>
+          </div>
+      </script>
+
+      <script id="oauth-template" type="text/x-handlebars-template">
+        <h2>oAuth info</h2>
+        <dl class="dl-horizontal">
+          <dt>Access token</dt>
+          <dd class="text-overflow">{{access_token}}</dd>
+        </dl>
+      </script>
+
+      <ul>
+        <li>Item</li>
+        <li>Item</li>
+        <li>Item</li>
+        <li>Item</li>
+        <li>Item</li>
+        <li>Item</li>
+      </ul>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; VHN 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+    <script>
+          function setPlayer(url, name, artist, image) {
+            console.log(image);
+            console.log(url);
+            console.log(name);
+            var audio = document.getElementById('audio');
+            document.getElementsByTagName("source")[0].setAttribute("src", url);
+            document.getElementById('song-details').innerHTML = '<marquee behavior="scroll" direction="left">' + name + ' – ' + artist + '</marquee>';
+            document.getElementById('album-cover').setAttribute("src", image);
+            document.getElementById('album-cover').setAttribute("height", 300);
+            document.getElementById('album-cover').setAttribute("width", 300);
+            audio.load();
+            audio.play();
+            document.body.scrollTop = 0; // For Chrome, Safari and Opera 
+            document.documentElement.scrollTop = 0; // For IE and Firefox
+          }
+    </script>
+</body>
+
+</html>
