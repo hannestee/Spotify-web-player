@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Sptfy5.0</title>
+  <title>Sptfy 5.0</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
   <script src="auth.js"></script>
   <script src="main.js"></script>
-  
+  <script src="bars.js"></script>
 </head>
 
 <body>
@@ -104,21 +104,23 @@
 
 	
     <!-- Portfolio Item Row -->
-    <div class="row">
+    <div class="row" id="mainContent">
+	   <div class="col-md-8" id="player2">
+        <div id='loading'>
+          <p class='msg'></p>
+        </div>
+		<canvas id="canvas"></canvas>
+       </div>
 
-      <div class="col-md-8">
-        <!--<img class="img-fluid" src="http://placehold.it/750x500" alt="">-->
-      </div>
-
-      <div class="col-md-4 song-info">
+      <div class="col-md-4 song-info" id="audioContent" style="display:none;">
           <img width="200" height="200" class="img-responsive mx-auto my-auto" id="album-cover" src="https://i.scdn.co/image/75fe67a957349ef0f2fd2341d197399e9f31a30f"></img>
           <p class="song-details" id="song-details"><marquee behavior="scroll" direction="left">Random Artist-Random Song</marquee></p>
-		  <audio controls id="audio">
+			<audio controls id="audio" crossorigin="anonymous">
 			<source src="https://p.scdn.co/mp3-preview/7d96f9e8087aee5a9822af8be5a8539b9b7b186a?cid=f6c1ec9bcbf7426fa257999930ec8ee8" type="audio/mpeg">
 			Your browser does not support the audio element.
-		  </audio>
+		  </audio>	
+		  <pre></pre>
       </div>
-
     </div>
     <!-- /.row -->
 
@@ -127,19 +129,21 @@
 	
 	<div class="demo" id="demo"></div>
 	
-		<script id="user-profile-template" type="text/x-handlebars-template">
+	 <h3 class="my-4" id="playlistHeading" style="display:none">Playlist:</h3>
+	 <button id="clearPlaylist" "type="button" class="btn btn-danger" style="display:none">Clear</button>
+	
+	<div id="playlist" style="display:none;"></div>
+	  <script id="user-profile-template" type="text/x-handlebars-template" style="display:none">
 		<p>Logged in as</p><dd id="userName">{{id}}</dd>
 	  </script>
-	  	<div id="loggedin">
-        <div id="user-profile">
+	  <div id="loggedin" style="display:none">
+        <div id="user-profile" style="display:none">
         </div>
-        <div id="oauth">
+        <div id="oauth" style="display:none">
         </div>
 	  </div>
-
     <div class="row">
-	
-    <script id="oauth-template" type="text/x-handlebars-template">
+    <script id="oauth-template" type="text/x-handlebars-template" style="display:none">
       <h2>oAuth info</h2>
       <dl class="dl-horizontal">
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
@@ -167,29 +171,115 @@
 
   <script>
 	function setPlayer(url, name, artist, image){
-		console.log(image);
-		console.log(url);
-		console.log(name);
+		document.getElementById('audioContent').setAttribute("style", "display:block;");
 		var audio = document.getElementById('audio');
 		document.getElementsByTagName("source")[0].setAttribute("src", url);
 		document.getElementById('song-details').innerHTML = '<marquee behavior="scroll" direction="left">' + name + ' – ' + artist + '</marquee>';
 		document.getElementById('album-cover').setAttribute("src", image);
 		document.getElementById('album-cover').setAttribute("height", 300);
 		document.getElementById('album-cover').setAttribute("width", 300);
-		audio.load();
-		audio.play();
-		//document.body.scrollTop = 0; // For Chrome, Safari and Opera 
-		//document.documentElement.scrollTop = 0; // For IE and Firefox
+		currentUrl = url;
+		songChange();
 		$("html, body").animate({scrollTop: 0}, 400);
     }
 	
 	$("#searchButton").click(function() {
 	document.getElementById('searchResults').setAttribute("style", "display:block;");
     $('html, body').animate({
-        scrollTop: $("#audio").offset().top
+        scrollTop: $("#song-details").offset().top
     }, 400);
+	console.log("searched");
 	});
 	
-  </script>	
-</body>
+	$("#clearPlaylist").click(function() {
+		//document.getElementById('playlist').setAttribute("style", "display:none;");
+		//document.getElementById('playlistHeading').setAttribute("style", "display:none;");
+		//document.getElementById('clearPlaylist').setAttribute("style", "display:none;");
+		$( "#playlist" ).hide( "slow", function() {
+		});
+		$( "#playlistHeading" ).hide( "slow", function() {
+		});
+		$( "#clearPlaylist" ).hide( "slow", function() {
+		});
+		localStorage.removeItem('playlist');
+		playlistData = [];
+		console.log("cleared");
+	});
+	
+	var playlistData = localStorage.getItem("playlist");
+	
+	if (playlistData) {
+		//console.log(JSON.parse(playlistData));
+		console.log("playlist found");
+		addPlaylist();
+	} 
+	
+	function addPlaylist(){
+		document.getElementById('playlist').setAttribute("style", "display:block;");
+		document.getElementById('playlistHeading').setAttribute("style", "display:inline-block;");
+		document.getElementById('clearPlaylist').setAttribute("style", "display:inline-block;margin-left:50%;");
+		var parsedData = JSON.parse(playlistData);
+		console.log(parsedData[0][1]);
+		for (var i in parsedData){
+			//console.log(parsedData[i][3]);
+			$( "#playlist" ).append("<div style='display:inline-block;width:30em;'><ul id='playlistObject' class='playlistObject' style='max-width:90%;height:3.3em;'>"+
+				"<div onclick='setPlayer(\"" +
+				parsedData[i][0] + "\",\"" +
+				parsedData[i][1] + "\",\"" +
+				parsedData[i][2] + "\",\"" +
+				parsedData[i][3] +"\");'><img class='aimage' style='display:inline-block;margin-left:-2.45em;margin-right:1em;margin-bottom:1.5em;'alt='Album picture' height='50' width='50' src="+
+				parsedData[i][3] +"><div style='display:inline-block;width:50%;'><p class='songName' id='songName' style='margin-bottom:0;text-overflow:ellipsis;white-space:nowrap;'>"+
+				parsedData[i][1]+ " "+"</p>"+"<p id='artistName' style='margin-bottom:0;color:darkcyan;text-overflow:ellipsis;white-space:pre;'>"+
+				parsedData[i][2]+
+				"</p>"+"</div>");
+				//console.log(parsedData[i][1]);
+		}
+	}
+	
+	function addToPlaylist(url, name, artist, image){
+		//var playlist = localStorage.getItem("playlist");
+		//console.log(playlist);
+		var favourite = [url, name, artist, image];
+		//console.log("favourite:", favourite);
+
+		if (playlistData != null) {
+			//console.log(JSON.parse(playlistData));
+			//console.log("add");
+			var data = JSON.parse(playlistData);
+			//console.log("data", data);
+			data.push(favourite);
+			localStorage.setItem("playlist", JSON.stringify(data));
+			playlistData = localStorage.getItem("playlist");
+			//console.log(JSON.parse(playlistData));
+
+
+			console.log(data.slice(-1)[0][1]);
+			
+			$( "#playlist" ).append("<div style='display:inline-block;width:30em;'><ul id='playlistObject' class='playlistObject' style='max-width:90%;height:3.3em;'>"+
+				"<div onclick='setPlayer(\"" +
+				data.slice(-1)[0][0] + "\",\"" +
+				data.slice(-1)[0][1] + "\",\"" +
+				data.slice(-1)[0][2] + "\",\"" +
+				data.slice(-1)[0][3] +"\");'><img class='aimage' style='display:inline-block;margin-left:-2.45em;margin-right:1em;margin-bottom:1.5em;'alt='Album picture' height='50' width='50' src="+
+				data.slice(-1)[0][3] +"><div style='display:inline-block;width:50%;'><p class='songName' id='songName' style='margin-bottom:0;text-overflow:ellipsis;white-space:nowrap;'>"+
+				data.slice(-1)[0][1] + " "+"</p>"+"<p id='artistName' style='margin-bottom:0;color:darkcyan;text-overflow:ellipsis;white-space:pre;'>"+
+				data.slice(-1)[0][2] +
+				"</p>"+"</div>");
+		} else {
+			console.log("no playlist");
+			var data = [];
+			data.push(favourite);	
+			localStorage.setItem("playlist", JSON.stringify(data));
+			//console.log(localStorage.getItem("playlist"));	
+			playlistData = localStorage.getItem("playlist");
+			addPlaylist();
+			
+		}
+	}
+	$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+	});
+	</script>
+		<script src="index.js"></script>
+	</body>
 </html>

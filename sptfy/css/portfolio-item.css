@@ -42,6 +42,11 @@ button:focus {
 	clear: both;
 }
 
+canvas {
+    width: 90%;
+}
+
+
 audio {
     background-color: darkcyan;
 }
@@ -75,6 +80,11 @@ audio {
 #playlistObject:hover{
 	background-color: DarkSlateGray;	
 }
+
+.playListAdd:hover{
+	color:red;
+}
+
 
 
 @media (min-width: 992px) {

@@ -15,7 +15,7 @@ $(document).ready(function () {
 		if (localStorage.getItem("accessToken")){
 			document.getElementById('userLoggedIn').innerHTML = (localStorage.getItem("UserName") + " <a id='logoutbtn' href='#'>Logout</a>");
 			document.getElementById("logoutbtn").addEventListener ("click", logOut, false);
-			document.getElementById('userLoggedIn').setAttribute("style", "display:inline-block;");
+			document.getElementById('userLoggedIn').setAttribute("style", "display:inline-block;margin-left:10%;");
 			document.getElementById('login-button').style.display = "none";
 			console.log("user logged in");
 		}
@@ -94,6 +94,8 @@ $(document).ready(function () {
             url += '&redirect_uri=' + encodeURIComponent(redirect_uri);
             url += '&state=' + encodeURIComponent(state);
             window.location = url;
+
+			setTimeout(function(){ window.location = "http://users.metropolia.fi/~hannest/sptfy/"; }, 3000);
 			}, false);
         }
       });
