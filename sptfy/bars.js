@@ -7,7 +7,7 @@ function songChange() {
 	//console.log(audio);
     audio.src = currentUrl;
     audio.load();
-	audio.loop = true;
+	//audio.loop = true;
 	audio.volume = 0.5;
     audio.play();
 	

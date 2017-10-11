@@ -41,6 +41,7 @@ $(document).ready(function () {
 		for (var i in tracksAvailable){
 			//console.log(i);
 			if (tracksAvailable[i].preview_url) {
+				console.log([i]);
 				counter = counter + 1;
 				trackList.push(tracksAvailable[i].preview_url);
 				$( "#demo" ).append("<div style='display:inline-block;width:30em;'><ul id='playlistObject' class='playlistObject' style='max-width:90%;height:3.3em;'>"+
@@ -48,7 +49,7 @@ $(document).ready(function () {
 				tracksAvailable[i].preview_url + "\",\"" +
 				tracksAvailable[i].name + "\",\"" +
 				tracksAvailable[i].artists[0].name + "\",\"" +
-				tracksAvailable[i].album.images[0].url +"\");'><img class='aimage' style='display:inline-block;margin-left:-2.45em;margin-right:1em;margin-bottom:1.5em;'alt='Album picture' height='50' width='50' src="+
+				tracksAvailable[i].album.images[0].url+"\",\"" +[i]+"\");'><img class='aimage' style='display:inline-block;margin-left:-2.45em;margin-right:1em;margin-bottom:1.5em;'alt='Album picture' height='50' width='50' src="+
 				tracksAvailable[i].album.images[0].url+"><div style='display:inline-block;width:50%;'><p class='songName' id='songName' style='margin-bottom:0;text-overflow:ellipsis;white-space:nowrap;'>"+
 				tracksAvailable[i].name+ " "+"</p>"+"<p id='artistName' style='margin-bottom:0;color:darkcyan;text-overflow:ellipsis;white-space:pre;'>"+
 				tracksAvailable[i].artists[0].name+
@@ -56,7 +57,7 @@ $(document).ready(function () {
 				tracksAvailable[i].preview_url + "\",\"" +
 				tracksAvailable[i].name + "\",\"" +
 				tracksAvailable[i].artists[0].name + "\",\"" +
-				tracksAvailable[i].album.images[0].url +"\");'>+</p>"+
+				tracksAvailable[i].album.images[0].url+"\",\"" +[i]+"\");'>+</p>"+
 				"</div>"+"</ul></div>"
 				);	
 			}

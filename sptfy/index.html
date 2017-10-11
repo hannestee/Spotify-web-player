@@ -170,7 +170,10 @@
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
   <script>
-	function setPlayer(url, name, artist, image){
+	var index;
+	function setPlayer(url, name, artist, image, indexNumber){
+		console.log("index is",indexNumber);
+		index = indexNumber;
 		document.getElementById('audioContent').setAttribute("style", "display:block;");
 		var audio = document.getElementById('audio');
 		document.getElementsByTagName("source")[0].setAttribute("src", url);
@@ -208,6 +211,8 @@
 	
 	var playlistData = localStorage.getItem("playlist");
 	
+	console.log(playlistData);
+	
 	if (playlistData) {
 		//console.log(JSON.parse(playlistData));
 		console.log("playlist found");
@@ -227,13 +232,13 @@
 				parsedData[i][0] + "\",\"" +
 				parsedData[i][1] + "\",\"" +
 				parsedData[i][2] + "\",\"" +
-				parsedData[i][3] +"\");'><img class='aimage' style='display:inline-block;margin-left:-2.45em;margin-right:1em;margin-bottom:1.5em;'alt='Album picture' height='50' width='50' src="+
+				parsedData[i][3] +"\",\""+[i]+"\");'><img class='aimage' style='display:inline-block;margin-left:-2.45em;margin-right:1em;margin-bottom:1.5em;'alt='Album picture' height='50' width='50' src="+
 				parsedData[i][3] +"><div style='display:inline-block;width:50%;'><p class='songName' id='songName' style='margin-bottom:0;text-overflow:ellipsis;white-space:nowrap;'>"+
 				parsedData[i][1]+ " "+"</p>"+"<p id='artistName' style='margin-bottom:0;color:darkcyan;text-overflow:ellipsis;white-space:pre;'>"+
 				parsedData[i][2]+
 				"</p>"+"</div>");
 				//console.log(parsedData[i][1]);
-		}
+		}		
 	}
 	
 	function addToPlaylist(url, name, artist, image){
@@ -251,8 +256,6 @@
 			localStorage.setItem("playlist", JSON.stringify(data));
 			playlistData = localStorage.getItem("playlist");
 			//console.log(JSON.parse(playlistData));
-
-
 			console.log(data.slice(-1)[0][1]);
 			
 			$( "#playlist" ).append("<div style='display:inline-block;width:30em;'><ul id='playlistObject' class='playlistObject' style='max-width:90%;height:3.3em;'>"+
@@ -276,9 +279,18 @@
 			
 		}
 	}
-	$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
-	});
+	
+	document.getElementById('audio').addEventListener('ended',myHandler,false);
+	function myHandler(e) {
+		console.log('ended');
+		//console.log(index);
+		var newIndex = index*1+1;
+		//console.log("parsed",newIndex);
+		var parsedData = JSON.parse(playlistData);
+		//console.log(tracksAvailable[newIndex], tracksAvailable[newIndex].name, tracksAvailable[newIndex].artists[0].name, tracksAvailable[newIndex].album.images[0].url, newIndex);		
+		//console.log(parsedData[index]);
+		setPlayer(parsedData[newIndex][0], parsedData[newIndex][1], parsedData[newIndex][2], parsedData[newIndex][3], newIndex);
+	}
 	</script>
 		<script src="index.js"></script>
 	</body>
